@@ -4,6 +4,7 @@ import random
 from objects.asteroid import Asteroid
 from objects.ship import Ship
 from objects.laser import Laser
+from objects.particle import Particle
 from constants import *
 
 """
@@ -11,6 +12,10 @@ All weight is in kg.
 All time is in ms.
 All speed is in m/ms (p/ms)
 """
+
+
+def random_velocity(magnitude=1):
+    return (random.random() - 0.5) * magnitude, (random.random() - 0.5) * magnitude
 
 
 def handle_events():
@@ -85,7 +90,8 @@ if __name__ == "__main__":
     asteroid = Asteroid(20, location=random_location(size))
     actors = {Asteroid: [asteroid],
               Ship: [ship],
-              Laser: []}
+              Laser: [],
+              Particle: []}
 
     while 1:
         delta_time = clock.tick(60)
