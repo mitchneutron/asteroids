@@ -1,11 +1,11 @@
 import math
-from objects.actor import Actor
+from objects.drawable import Drawable
 
 # speed will be pixels/millisecond
 
 
-class Movable(Actor):
-    def __init__(self, surface, velocity=None, mass=None, drag=0):
+class Movable(Drawable):
+    def __init__(self, surface, location=None, velocity=None, mass=None, drag=0):
         self.mass = mass
         self.velocity_vector = [0, 0]
         self.drag = drag
@@ -13,7 +13,7 @@ class Movable(Actor):
             self.velocity_vector[0] = velocity[0]
             self.velocity_vector[1] = velocity[1]
         self.buffered_move = [0.0, 0.0]  # move that I haven't made because we can only move in full pixels.
-        super().__init__(surface)
+        super().__init__(surface, location)
 
     def increase_speed(self, vector, magnitude=1):
         self.velocity_vector[0] += vector[0] * magnitude
@@ -69,11 +69,11 @@ class Movable(Actor):
         self.buffered_move[1] = math.fmod(y, 1)
         self.move(int(x - self.buffered_move[0]), int(y - self.buffered_move[1]))
 
-    def update(self, screen, delta_time):
+    def update(self, actor_dict, screen, delta_time):
         self.collide_screen(screen)
         self.apply_drag(delta_time)
         self._apply_velocity(delta_time)
-        super().update(screen, delta_time)
+        super().update(actor_dict, screen, delta_time)
 
     # No collisions and physics yet.
     # def calculate_momentum(self):

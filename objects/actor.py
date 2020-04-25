@@ -1,6 +1,6 @@
-from objects.drawable import Drawable
+from objects.movable import Movable
 
 
-class Actor(Drawable):
-    def get_actors(self):
-        return [self]
+class Actor(Movable):
+    def update(self, window, delta_time):
+        super().update(window, delta_time)
