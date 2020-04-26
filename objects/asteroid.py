@@ -1,6 +1,6 @@
-import pygame, math, random
-from objects.movable import Movable
-from main import random_velocity
+import pygame
+import objects.movable as movable
+from util import random_vector
 
 
 def init_image(hp):
@@ -17,7 +17,7 @@ def init_image(hp):
 #  dependent on that.
 
 
-class Asteroid(Movable):
+class Asteroid(movable.Movable):
     def __init__(self, hp, velocity=None, location=None):
         self.total_hp = hp
         self.hp = hp
@@ -33,7 +33,7 @@ class Asteroid(Movable):
 
         if velocity is None:
             scalar = 1.5
-            velocity = random_velocity()
+            velocity = random_vector()
             velocity = (velocity[0] * scalar / (hp + 3), velocity[1] * scalar / (hp + 3))
 
         super().__init__(surface, velocity=velocity, location=location)

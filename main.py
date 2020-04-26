@@ -1,21 +1,16 @@
 import pygame
 import sys
 import random
-from objects.asteroid import Asteroid
-from objects.ship import Ship
-from objects.laser import Laser
-from objects.particle import Particle
-from constants import *
+import objects.asteroid
+import objects.ship
+import objects.laser
+import objects.particle
 
 """
 All weight is in kg.
 All time is in ms.
 All speed is in m/ms (p/ms)
 """
-
-
-def random_velocity(magnitude=1):
-    return (random.random() - 0.5) * magnitude, (random.random() - 0.5) * magnitude
 
 
 def handle_events():
@@ -45,9 +40,9 @@ def refresh_actor_list(actor_list):
 
 
 def handle_collisions(actor_list):
-    asteroids = {a: a.get_rect() for a in actor_list.get(Asteroid)}
-    lasers = {l: l.get_rect() for l in actor_list.get(Laser)}
-    ships = {s: s.get_rect() for s in actor_list.get(Ship)}
+    asteroids = {a: a.get_rect() for a in actor_list.get(objects.asteroid.Asteroid)}
+    lasers = {l: l.get_rect() for l in actor_list.get(objects.laser.Laser)}
+    ships = {s: s.get_rect() for s in actor_list.get(objects.ship.Ship)}
 
     for laser_entry in lasers.items():
         laser = laser_entry[0]
@@ -86,12 +81,12 @@ if __name__ == "__main__":
     move_map = get_move_map()
     clock = pygame.time.Clock()
 
-    ship = Ship(random_location(size))
-    asteroid = Asteroid(20, location=random_location(size))
-    actors = {Asteroid: [asteroid],
-              Ship: [ship],
-              Laser: [],
-              Particle: []}
+    ship = objects.ship.Ship((size[0] / 2, size[1] / 2))
+    asteroid = objects.asteroid.Asteroid(20, location=random_location(size))
+    actors = {objects.asteroid.Asteroid: [asteroid],
+              objects.ship.Ship: [ship],
+              objects.laser.Laser: [],
+              objects.particle.Particle: []}
 
     while 1:
         delta_time = clock.tick(60)

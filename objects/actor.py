@@ -1,6 +1,6 @@
-from objects.movable import Movable
+import objects.movable
 
 
-class Actor(Movable):
+class Actor(objects.movable.Movable):
     def update(self, window, delta_time):
         super().update(window, delta_time)
