@@ -8,16 +8,41 @@ default_diameter = 3
 default_color = (255, 255, 255)
 default_lifespan = 100
 default_sway = 0.1
-default_variation = 0.1
+default_variation_speed = 0.05
+default_variation_location = 3
+default_variation_color = 0
 
 
-def spawn_particles(destination_list, count, location, color=default_color, variation=default_variation, base_velocity=(0, 0),
-                    sway=default_sway, size=default_diameter, drag=default_drag,
-                    lifespan=default_lifespan, mass=default_mass, fade_to_color=None):
+def vary_color(color, variation):
+    color = util.gauss_vector(color, variation)
+    color = [min(255, max(0, int(x))) for x in color]
+    return color
+
+
+def spawn_particles(destination_list,
+                    count,
+                    location,
+                    color=default_color,
+                    velocity=(0, 0),
+                    lifespan=default_lifespan,
+                    variation_velocity=default_variation_speed,
+                    variation_location=default_variation_location,
+                    variation_color=default_variation_color,
+                    fade_to_color=None,
+                    mass=default_mass,
+                    sway=default_sway,
+                    diameter=default_diameter,
+                    drag=default_drag,
+                    ):
     for x in range(count):
-        velocity = util.gauss_vector(base_velocity, variation)
-        location = util.gauss_vector(location, variation)
-        particle = Particle(location, velocity, color, size, drag, mass, sway, lifespan, fade_to_color=fade_to_color)
+        particle_color = vary_color(color, variation_color)
+        particle_velocity = util.gauss_vector(velocity, variation_velocity)
+        particle_location = util.gauss_vector(location, variation_location)
+        if fade_to_color is not None:
+            fade_to_color = vary_color(fade_to_color, variation_color)
+        particle = Particle(particle_location, particle_velocity,
+                            particle_color, diameter, drag, mass,
+                            sway, lifespan, fade_to_color=fade_to_color)
         destination_list.append(particle)
 
 

@@ -1,16 +1,23 @@
 import pygame
 import objects.movable as movable
+import objects.particle as particle
 from util import random_vector
+
+asteroid_color = (100, 150, 120)
+brown = (139, 69, 19)
+scalar = 4
+
+
+def diameter_from_hp(hp):
+    return hp * scalar + 5
 
 
 def init_image(hp):
     # todo make the drawing cooler.
-    color = (100, 150, 120)
-    scalar = 4
-    diameter = hp * scalar + 5
+    diameter = diameter_from_hp(hp)
     radius = int(diameter / 2)
     surface = pygame.Surface((diameter, diameter), pygame.SRCALPHA)
-    pygame.draw.circle(surface, color, (radius, radius), radius)
+    pygame.draw.circle(surface, asteroid_color, (radius, radius), radius)
     return surface
 
 # todo: give the asteroid a weight based on the hp, and make the velocity more dynamic and
@@ -49,6 +56,15 @@ class Asteroid(movable.Movable):
             asteroids = actor_dict.get(Asteroid)
             asteroids.remove(self)
             asteroids.extend(self.children)
+            particles = actor_dict.get(particle.Particle)
+            particle.spawn_particles(destination_list=particles,
+                                     count=self.total_hp * 2,
+                                     location=self.get_rect().center,
+                                     color=brown,
+                                     variation_location=int(diameter_from_hp(self.total_hp) / 4),
+                                     lifespan=1000,
+                                     sway=0.01
+                                     )
 
     def destroy(self):
         # break it into multiple asteroids. Randomize this...

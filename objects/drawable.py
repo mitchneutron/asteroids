@@ -19,7 +19,7 @@ class Drawable:
         self.angle = 0
         self.rect = self._original.get_rect()
         if location is not None:
-            self.rect.move_ip(location)
+            self.rect.center = location
         self._update_func = self._draw
 
         self.blink_time_total_remaining = 0
