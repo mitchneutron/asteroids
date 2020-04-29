@@ -62,8 +62,9 @@ class Asteroid(movable.Movable):
                                      location=self.get_rect().center,
                                      color=brown,
                                      variation_location=int(diameter_from_hp(self.total_hp) / 4),
-                                     lifespan=1000,
-                                     sway=0.01
+                                     variation_velocity=0.1,
+                                     lifespan=1500,
+                                     sway=0.00
                                      )
 
     def destroy(self):

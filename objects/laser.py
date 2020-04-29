@@ -63,9 +63,8 @@ class Laser(Movable):
             return
         self.spawn_laser_particle(particles)
 
-
     def destroy(self):
         self.lifeSpan = 0
 
     def get_damage(self):
-        return 100
+        return 5
