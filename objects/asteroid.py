@@ -3,8 +3,8 @@ import objects.movable as movable
 import objects.particle as particle
 from util import random_vector
 
-asteroid_color = (100, 150, 120)
 brown = (139, 69, 19)
+asteroid_color = brown
 scalar = 4
 
 

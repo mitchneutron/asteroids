@@ -48,12 +48,15 @@ class Ship(movable.Movable):
             laser = lasermod.Laser(final_location, self.direction_vector, self.get_velocity())
             self.lasers.append(laser)
 
+    def start_invincibility(self):
+        self.invincibility_remaining = self.invincibility_max
+        super().blink(self.invincibility_max, self.frequency)
+
     def hit(self, damage=1):
         if self.invincibility_remaining <= 0:
             self.hp -= damage
             self.hit_particles_to_spawn = damage * 5
-            self.invincibility_remaining = self.invincibility_max
-            super().blink(self.invincibility_max, self.frequency)
+            self.start_invincibility()
             return True
         return False
 

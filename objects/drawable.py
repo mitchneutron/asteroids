@@ -15,7 +15,7 @@ def fill_surface(color, surface):
 
 class Drawable:
     def __init__(self, surface, location=None):
-        self._original = surface
+        self._original = surface.convert_alpha()
         self.angle = 0
         self.rect = self._original.get_rect()
         if location is not None:
