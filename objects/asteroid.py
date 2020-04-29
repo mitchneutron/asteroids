@@ -1,11 +1,12 @@
 import pygame
 import objects.movable as movable
 import objects.particle as particle
-from util import random_vector
+import util
 
 brown = (139, 69, 19)
 asteroid_color = brown
 scalar = 4
+total_asteroid_points_scalar = 2
 
 
 def diameter_from_hp(hp):
@@ -14,10 +15,24 @@ def diameter_from_hp(hp):
 
 def init_image(hp):
     # todo make the drawing cooler.
+    direction_of_draw = pygame.math.Vector2((0, -1))
+    total_points = hp + 2
+    degrees_per_point = 360 / total_points
     diameter = diameter_from_hp(hp)
     radius = int(diameter / 2)
     surface = pygame.Surface((diameter, diameter), pygame.SRCALPHA)
-    pygame.draw.circle(surface, asteroid_color, (radius, radius), radius)
+    center_point = surface.get_rect().center
+    points = []
+    previous_scalar = radius
+    for _ in range(total_points):
+        point_scalar = max(min(util.gauss(previous_scalar + 1, 3), radius), 1)
+        previous_scalar = point_scalar
+        point = util.scale_vector(direction_of_draw, point_scalar)
+        point = util.add_vector(point, center_point)
+        points.append(point)
+        direction_of_draw = direction_of_draw.rotate(degrees_per_point)
+
+    pygame.draw.polygon(surface, asteroid_color, points)
     return surface
 
 # todo: give the asteroid a weight based on the hp, and make the velocity more dynamic and
@@ -40,7 +55,7 @@ class Asteroid(movable.Movable):
 
         if velocity is None:
             scalar = 1.5
-            velocity = random_vector()
+            velocity = util.random_vector()
             velocity = (velocity[0] * scalar / (hp + 3), velocity[1] * scalar / (hp + 3))
 
         super().__init__(surface, velocity=velocity, location=location)
