@@ -6,4 +6,4 @@ Feel free to give me suggesstions or feedback.
 
 The only dependency besides python3 is pygame. 
 
-Special thanks to the creators of pygame and python to make this possible. Check out the book Pygame 4000
+Special thanks to the creators of pygame and python to make this possible. Check out the book Pygame 4000, in the process of being written by a 15 year long collaborator in pygame.
