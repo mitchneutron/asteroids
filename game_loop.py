@@ -168,8 +168,6 @@ class GameLoop:
         self.screen.blit(message, rect)
 
 
-
-
 if __name__ == "__main__":
     pygame.init()
     loop = GameLoop()
