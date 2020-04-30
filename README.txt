@@ -2,7 +2,7 @@ Simple asteroids game as a proof that I can make a game. Arrow keys to move, spa
 
 It is open to use at your own risk for commercial and non commercial purposes, just give credit where it is due.
 
-Feel free to give me suggesstions or feedback. 
+I'm definitely looking to get into similar and different projects in the future, if you want to collaborate then reach out. Feel free to give me suggesstions or feedback. 
 
 The only dependency besides python3 is pygame. 
 
